@@ -22,10 +22,10 @@ The goal of examstats is to assist in understanding exam grades.
 
 ## Installation
 
-You can install the development version of `examstats` from [Github](https://CRAN.R-project.org) with:
+You can install the development version of `examstats` from [Github](https://github.com/nxskok/examstats) with:
 
 ``` r
-install.packages("examstats")
+devtools::install_github("nxskok/examstats")
 ```
 
 ## Example
