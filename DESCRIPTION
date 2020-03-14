@@ -15,3 +15,5 @@ Imports:
     dplyr,
     magrittr
 RoxygenNote: 7.0.2
+URL: https://github.com/nxskok/examstats
+BugReports: https://github.com/nxskok/examstats/issues
