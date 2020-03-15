@@ -40,7 +40,7 @@ The data layout is: a row for each student, a column for each question,
 and an additional column with the total mark for each student. The
 questions could be out of several marks, or they could be multiple
 choice questions that are either right (1) or wrong (0). This is the
-ormat that comes out of Crowdmark (“save grades as CSV”); that has some
+format that comes out of Crowdmark (“save grades as CSV”); that has some
 additional columns on the front identifying the students which will need
 to be removed first. The column of totals has to be called `Total`.
 
