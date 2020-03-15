@@ -15,3 +15,6 @@ A longer df with all marks in one column and for each student and question: that
 \description{
 Make longer marks df
 }
+\examples{
+make_long(test_grades)
+}

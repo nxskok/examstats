@@ -30,25 +30,71 @@ devtools::install_github("nxskok/examstats")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+The package includes a small made-up data set of grades to play with:
 
 ```{r example}
 library(examstats)
-## basic example code
+library(ggplot2)
+test_grades
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+The data layout is: a row for each student, a column for each question, and an additional column with the total mark for each student. The questions could be out of several marks, or they could be multiple choice questions that are either right (1) or wrong (0). This is the ormat that comes out of Crowdmark ("save grades as CSV"); that has some additional columns on the front identifying the students which will need to be removed first. The column of totals has to be called `Total`. 
 
-```{r cars}
-summary(cars)
+The first thing you might want to do is to summarize the total marks, thus:
+
+```{r}
+make_stats(test_grades)
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date.
+This uses `quantile`; it is written so that you can pass to this function whatever you would pass to `quantile`:
 
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+```{r}
+make_stats(test_grades, c(0.10, 0.90))
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub!
+The 10th and 90th percentiles.
+
+I actually wrote the package to compute what the average percent correct was for each question and the item-total correlation (which shows how well a question discriminates between the top and bottom students):
+
+```{r}
+make_all(test_grades)
+```
+
+Question 2 is both the hardest and the most discriminating:
+
+```{r}
+ggplot(test_grades, aes(x=Q2, y=Total)) + geom_point()
+```
+
+The highest scorer on question 2 was the highest scorer on the exam, while the two lowest scorers on question 2 were among the lowest scorers on the exam also.
+
+Question 3, on the other hand, is not very discriminating:
+
+```{r}
+ggplot(test_grades, aes(x=Q3, y=Total)) + geom_point()
+```
+
+Out of the two people who scored 4, one was the highest scorer overall, and one was the lowest. Typically, a question like this is either testing something else, or was confusing to the students.
+
+## Other functions
+
+The functions that calculate the hardness values and the item-total correlations are both available individually. These take a long-format data set with all the marks in one column; there is also a function to make that.
+
+```{r}
+test_long <- make_long(test_grades)
+test_long
+```
+
+and then
+
+```{r}
+make_hardness(test_long)
+```
+
+and
+
+```{r}
+make_discrim(test_long)
+```
+
+`make_hardness` currently assumes that the maximum score on a question out of all the students is equal to the maximum score for the question. This can be improved.
